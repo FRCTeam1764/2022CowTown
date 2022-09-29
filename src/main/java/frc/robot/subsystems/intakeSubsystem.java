@@ -4,14 +4,53 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.motorcontrol.PWMTalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.RobotConstants;
 
 public class intakeSubsystem extends SubsystemBase {
   /** Creates a new intakeSubsystem. */
-  public intakeSubsystem() {}
+  private PWMTalonFX intakeMotor;
+  private DoubleSolenoid intakeSolenoid;
+  private DigitalInput conveyorBreakBeam;
+  private DigitalInput elevatorBreakBeam;
+  private boolean IsIntakeDeployed = false;
+  public intakeSubsystem(DigitalInput conveyorBreakBream, DigitalInput elevatorBreakBeam) {
+   this.intakeMotor = new PWMTalonFX(RobotConstants.INTAKE_MOTOR);
+    this.intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotConstants.INTAKE_SOLENOID_FORWARD, RobotConstants.INTAKE_SOLENOID_REVERSE);
+    this.conveyorBreakBeam = conveyorBreakBeam;
+    this.elevatorBreakBeam = elevatorBreakBeam;
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+  }
+
+
+  public void intakeOn(int speed, boolean override){
+
+ if (override){
+
+ }else{
+  if (elevatorBreakBeam.get() == false && conveyorBreakBeam.get() == false){
+    if (IsIntakeDeployed == false){
+    intakeSolenoid.set(Value.kForward);
+    intakeMotor.set(speed);
+    }  
+  }else{
+
+  }
+ }
+  }
+
+  public void intakeOff(){
+    intakeSolenoid.set(Value.kReverse);
+    intakeMotor.set(0);
   }
 }
