@@ -19,11 +19,13 @@ public class intakeSubsystem extends SubsystemBase {
   private DigitalInput conveyorBreakBeam;
   private DigitalInput elevatorBreakBeam;
   private boolean IsIntakeDeployed = false;
-  public intakeSubsystem(DigitalInput conveyorBreakBream, DigitalInput elevatorBreakBeam) {
+  public intakeSubsystem(DigitalInput conveyorBreakBeam, DigitalInput elevatorBreakBeam) {
    this.intakeMotor = new PWMTalonFX(RobotConstants.INTAKE_MOTOR);
     this.intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotConstants.INTAKE_SOLENOID_FORWARD, RobotConstants.INTAKE_SOLENOID_REVERSE);
     this.conveyorBreakBeam = conveyorBreakBeam;
     this.elevatorBreakBeam = elevatorBreakBeam;
+
+
   }
 
   @Override
@@ -36,21 +38,36 @@ public class intakeSubsystem extends SubsystemBase {
   public void intakeOn(int speed, boolean override){
 
  if (override){
-
+  if (IsIntakeDeployed == false){
+  intakeSolenoid.set(Value.kForward);
+  intakeMotor.set(speed);
+  IsIntakeDeployed = true;
+   
+}else{
+  intakeSolenoid.set(Value.kReverse);
+  intakeMotor.set(0);
+  IsIntakeDeployed = false;
+}
  }else{
-  if (elevatorBreakBeam.get() == false && conveyorBreakBeam.get() == false){
     if (IsIntakeDeployed == false){
+      if (elevatorBreakBeam.get() == false && conveyorBreakBeam.get() == false){
     intakeSolenoid.set(Value.kForward);
     intakeMotor.set(speed);
+    IsIntakeDeployed = true;
     }  
   }else{
-
+    intakeSolenoid.set(Value.kReverse);
+    intakeMotor.set(0);
+    IsIntakeDeployed = false;
   }
  }
   }
 
   public void intakeOff(){
-    intakeSolenoid.set(Value.kReverse);
     intakeMotor.set(0);
+    if (IsIntakeDeployed == true ){
+    intakeSolenoid.set(Value.kReverse);
+  IsIntakeDeployed = false;
+    }
   }
 }
