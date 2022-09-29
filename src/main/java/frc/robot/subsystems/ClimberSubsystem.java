@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.libraries.internal.LazyTalonFX;
 
-public class Climber extends SubsystemBase {
+public class ClimberSubsystem extends SubsystemBase {
   private LazyTalonFX climberMasterMotor;
   private LazyTalonFX climberFollowerMotor;
   private DoubleSolenoid climberSolenoid;
   
-  public Climber() {
+  public ClimberSubsystem() {
     this.climberMasterMotor = new LazyTalonFX(RobotConstants.CLIMBER_MASTER_MOTOR); 
     this.climberFollowerMotor = new LazyTalonFX(RobotConstants.CLIMBER_MASTER_MOTOR);
     this.climberSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotConstants.CLIMBER_SOLENOID_FORWARD, RobotConstants.CLIMBER_SOLENOID_REVERSE);
