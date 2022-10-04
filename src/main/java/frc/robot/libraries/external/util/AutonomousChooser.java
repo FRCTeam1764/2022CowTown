@@ -2,7 +2,8 @@ package frc.robot.libraries.external.util;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.*;
+import frc.robot.commands.base.*;
+import frc.robot.commands.base.FollowTrajectoryCommand;
 import frc.robot.libraries.external.control.Trajectory;
 import frc.robot.RobotContainer;
 
