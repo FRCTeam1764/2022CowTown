@@ -35,7 +35,7 @@ public class intakeSubsystem extends SubsystemBase {
   }
 
 
-  public void intakeOn(int speed, boolean override){
+  public void intakeOn(Double speed, boolean override){
 
  if (override){
   if (IsIntakeDeployed == false){
